@@ -13,7 +13,7 @@
         android:theme="@style/Theme.WildAnimalApp"
         tools:targetApi="31">
         <activity
-            android:name=".GamePageActivity"
+            android:name=".HomeScreenActivity"
             android:exported="true"
             android:label="@string/app_name"
             android:theme="@style/Theme.WildAnimalApp">
@@ -23,7 +23,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".StartUpActivity" />
+        <activity android:name=".WrongPageActivity" />
+        <activity android:name=".NicknameActivity" />
+        <activity android:name=".GamePageActivity" />
     </application>
 
 </manifest>

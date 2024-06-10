@@ -1,10 +1,12 @@
 package com.khjqwer.wildanimalapp
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -127,7 +129,15 @@ class HomeScreenActivity : ComponentActivity() {
                         }
                         Image(
                             painter = painterResource(id = R.drawable.start),
-                            contentDescription = null
+                            contentDescription = null,
+                            modifier = Modifier
+                                .clickable(
+                                        onClick = {
+                                            Session.questionsAnsweredCount = 0
+                                            val intent = Intent(this@HomeScreenActivity, GamePageActivity::class.java)
+                                            startActivity(intent)
+                                        }
+                                    )
                         )
 
                     }

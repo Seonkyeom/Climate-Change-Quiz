@@ -1,14 +1,19 @@
 package com.khjqwer.wildanimalapp
 
+import android.content.Intent
 import android.graphics.fonts.FontStyle
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -19,6 +24,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
@@ -60,6 +66,20 @@ class NicknameActivity : ComponentActivity() {
                             fontWeight = FontWeight.Bold
                         )
                     }
+                    Image(
+                        painter = painterResource(id = R.drawable.right_arrow),
+                        contentDescription = null,
+                        modifier = Modifier
+                            .padding(top = 400.dp, start = 300.dp)
+                            .clickable(
+                                onClick = {
+                                    val intent = Intent(this@NicknameActivity, HomeScreenActivity::class.java)
+                                    startActivity(intent)
+                                }
+                            )
+                            .size(70.dp)
+
+                    )
                 }
             }
         }

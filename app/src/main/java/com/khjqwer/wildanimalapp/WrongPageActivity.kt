@@ -1,9 +1,13 @@
 package com.khjqwer.wildanimalapp
 
+import android.content.Intent
 import android.os.Bundle
+import android.service.autofill.OnClickAction
+import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -48,7 +52,21 @@ class WrongPageActivity : ComponentActivity() {
                             contentDescription = null,
                             modifier = Modifier
                                 .padding(top = 400.dp, start = 300.dp)
+                                .clickable(
+                                    onClick = {
+                                        if (Session.questionsAnsweredCount == 2) {
+                                            val intent = Intent(this@WrongPageActivity, NicknameActivity::class.java)
+                                            startActivity(intent)
+                                        }
+                                        else{
+                                            val intent = Intent(this@WrongPageActivity, GamePageActivity::class.java)
+                                            startActivity(intent)
+                                        }
+
+                                    }
+                                )
                                 .size(70.dp)
+
                         )
                     }
                 }
