@@ -55,8 +55,15 @@ class GamePageActivity : ComponentActivity() {
                             Image(
                                 painter = painterResource(id = R.drawable.home_botton),
                                 contentDescription = null,
-                                modifier = Modifier.size(50.dp)
-
+                                modifier = Modifier
+                                    .size(50.dp)
+                                    .clickable {
+                                        val intent = Intent(
+                                            this@GamePageActivity,
+                                            NicknameActivity::class.java
+                                        )
+                                        startActivity(intent)
+                                    }
                             )
                             Spacer(modifier = Modifier.width(20.dp))
                             Image(
@@ -64,11 +71,14 @@ class GamePageActivity : ComponentActivity() {
                                 contentDescription = null,
                                 modifier = Modifier
                                     .size(50.dp)
-                                    .clickable{
-                                        val intent = Intent(this@GamePageActivity, NicknameActivity::class.java)
+                                    .clickable {
+                                        val intent = Intent(
+                                            this@GamePageActivity,
+                                            WrongPageActivity::class.java
+                                        )
                                         startActivity(intent)
-                            }
-                            )
+                                    }
+                                )
                             Spacer(modifier = Modifier.width(80.dp))
                             val colorFromHex = Color(android.graphics.Color.parseColor("#71eeeb"))
                             Box(
@@ -79,7 +89,7 @@ class GamePageActivity : ComponentActivity() {
                                 contentAlignment = Alignment.Center
                             ) {
                                 Text(
-                                    text = "000",
+                                    text = "0",
                                     color = Color.Black,
                                     fontSize = 20.sp
                                 )
