@@ -5,6 +5,7 @@ import android.graphics.fonts.FontStyle
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.activity.viewModels
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
@@ -34,8 +35,11 @@ import com.khjqwer.wildanimalapp.ui.theme.WildAnimalAppTheme
 class NicknameActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        val viewModel: MainViewModel by viewModels()
         setContent {
             WildAnimalAppTheme {
+                var text by remember { mutableStateOf(TextFieldValue()) }
+
                 // A surface container using the 'background' color from the theme
                 Surface(
                     modifier = Modifier.fillMaxSize(),
@@ -45,7 +49,6 @@ class NicknameActivity : ComponentActivity() {
                         horizontalAlignment = Alignment.CenterHorizontally,
                     ) {
                         Spacer(modifier = Modifier.height(170.dp))
-                        var text by remember { mutableStateOf(TextFieldValue()) }
                         TextField(
                             value = text,
                             onValueChange = { newValue ->
@@ -61,7 +64,7 @@ class NicknameActivity : ComponentActivity() {
                             fontWeight = FontWeight.Bold
                         )
                         Text(
-                            text = "150",
+                            text = ""+Session.score,
                             fontSize = 45.sp,
                             fontWeight = FontWeight.Bold
                         )
@@ -73,6 +76,8 @@ class NicknameActivity : ComponentActivity() {
                             .padding(top = 400.dp, start = 300.dp)
                             .clickable(
                                 onClick = {
+                                    viewModel.saveUserName(this@NicknameActivity, text.text)
+                                    viewModel.saveScore(this@NicknameActivity, Session.score)
                                     val intent = Intent(this@NicknameActivity, HomeScreenActivity::class.java)
                                     startActivity(intent)
                                 }
