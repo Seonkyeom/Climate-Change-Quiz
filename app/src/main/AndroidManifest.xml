@@ -26,6 +26,7 @@
         <activity android:name=".WrongPageActivity" />
         <activity android:name=".NicknameActivity" />
         <activity android:name=".GamePageActivity" />
+        <activity android:name=".CorrectPageActivity" />
     </application>
 
 </manifest>

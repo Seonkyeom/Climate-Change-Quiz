@@ -91,7 +91,7 @@ class GamePageActivity : ComponentActivity() {
                                 contentAlignment = Alignment.Center
                             ) {
                                 Text(
-                                    text = "0",
+                                    text = "" + Session.score,
                                     color = Color.Black,
                                     fontSize = 20.sp
                                 )
@@ -99,14 +99,14 @@ class GamePageActivity : ComponentActivity() {
                         }
                         Spacer(modifier = Modifier.height(60.dp))
                         Text(
-                            "which of following is greenhouse gas(GHG)?",
+                            text = Session.currentQuestion.question,
                             fontSize = 30.sp,
                             lineHeight = 40.sp
                         )
                         Spacer(modifier = Modifier.height(60.dp))
                         var selectedAnswer by remember { mutableStateOf(-1) }
                         Text(
-                            text = "CO2",
+                            text = "A."+Session.currentQuestion.q1,
                             fontSize = 25.sp,
                             color = if (selectedAnswer == 0) {
                                 Color.Green
@@ -120,7 +120,7 @@ class GamePageActivity : ComponentActivity() {
                             )
                         )
                         Text(
-                            text = "CH4",
+                            text = "B."+Session.currentQuestion.q2,
                             fontSize = 25.sp,
                             color = if (selectedAnswer == 1) {
                                 Color.Green
@@ -134,7 +134,7 @@ class GamePageActivity : ComponentActivity() {
                             )
                         )
                         Text(
-                            text = "Water Vapor",
+                            text = "C."+Session.currentQuestion.q3,
                             fontSize = 25.sp,
                             color = if (selectedAnswer == 2) {
                                 Color.Green
@@ -148,7 +148,7 @@ class GamePageActivity : ComponentActivity() {
                             )
                         )
                         Text(
-                            text = "All of the above",
+                            text = "D."+Session.currentQuestion.q4,
                             fontSize = 25.sp,
                             color = if (selectedAnswer == 3) {
                                 Color.Green
@@ -170,9 +170,12 @@ class GamePageActivity : ComponentActivity() {
                                 .align(alignment = Alignment.End)
                                 .size(50.dp)
                                 .clickable {
-                                    if  (selectedAnswer != -1) {
-                                        Session.questionsAnsweredCount = Session.questionsAnsweredCount + 1
+                                    if  (selectedAnswer != Session.currentQuestion.correct) {
                                         val intent = Intent(this@GamePageActivity, WrongPageActivity::class.java)
+                                        startActivity(intent)
+                                    } else {
+                                        Session.questionsAnsweredCount += 1
+                                        val intent = Intent(this@GamePageActivity, CorrectPageActivity::class.java)
                                         startActivity(intent)
                                     }
                                 }

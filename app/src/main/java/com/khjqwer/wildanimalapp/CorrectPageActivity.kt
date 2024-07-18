@@ -24,7 +24,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import com.khjqwer.wildanimalapp.ui.theme.WildAnimalAppTheme
 
-class WrongPageActivity : ComponentActivity() {
+class CorrectPageActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
@@ -40,7 +40,7 @@ class WrongPageActivity : ComponentActivity() {
                     ) {
                         Spacer(modifier = Modifier.height(50.dp))
                         Image(
-                            painter = painterResource(id = R.drawable.delete_button),
+                            painter = painterResource(id = R.drawable.check),
                             contentDescription = null,
                         )
                         Spacer(modifier = Modifier.height(50.dp))
@@ -56,11 +56,11 @@ class WrongPageActivity : ComponentActivity() {
                                     onClick = {
                                         Session.currentQuestionIndex += 1
                                         if (Session.currentQuestionIndex == 2) {
-                                            val intent = Intent(this@WrongPageActivity, NicknameActivity::class.java)
+                                            val intent = Intent(this@CorrectPageActivity, NicknameActivity::class.java)
                                             startActivity(intent)
                                         }
                                         else{
-                                            val intent = Intent(this@WrongPageActivity, GamePageActivity::class.java)
+                                            val intent = Intent(this@CorrectPageActivity, GamePageActivity::class.java)
                                             startActivity(intent)
                                         }
 

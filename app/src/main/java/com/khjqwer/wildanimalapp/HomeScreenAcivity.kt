@@ -37,6 +37,7 @@ import com.khjqwer.wildanimalapp.ui.theme.WildAnimalAppTheme
 class HomeScreenActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        Session.createQuestionBank()
         setContent {
             WildAnimalAppTheme {
                 // A surface container using the 'background' color from the theme
