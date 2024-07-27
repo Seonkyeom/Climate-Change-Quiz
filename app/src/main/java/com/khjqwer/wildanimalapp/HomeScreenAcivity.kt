@@ -2,8 +2,10 @@ package com.khjqwer.wildanimalapp
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.activity.viewModels
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -23,6 +25,8 @@ import androidx.compose.material3.Divider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
+import androidx.compose.runtime.mutableStateListOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -33,12 +37,19 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.khjqwer.wildanimalapp.ui.theme.WildAnimalAppTheme
 
-
 class HomeScreenActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         Session.createQuestionBank()
+        val viewModel: MainViewModel by viewModels()
+        viewModel.getLeaderBoardRank()
         setContent {
+            var data = remember { mutableStateListOf<LeaderBoardRank>() }
+            viewModel.ranks.observe(this) {
+                data.addAll(it)
+                Log.e("minmin", "data: " + data)
+            }
+
             WildAnimalAppTheme {
                 // A surface container using the 'background' color from the theme
                 Surface(
@@ -77,7 +88,7 @@ class HomeScreenActivity : ComponentActivity() {
                             )
 
                         }
-                        for (i in 1..5) {
+                        for (i in 1..data.size) {
                             Row(
                                 modifier = Modifier
                                     .fillMaxWidth()
@@ -118,11 +129,11 @@ class HomeScreenActivity : ComponentActivity() {
                                 }
 
                                 Text(
-                                    text = "Item $i-2",
+                                    text = data.get(i - 1).username,
                                     modifier = Modifier.weight(1f)
                                 )
                                 Text(
-                                    text = "Item $i-3",
+                                    text = "" + data.get(i - 1).score,
                                     modifier = Modifier.weight(1f)
                                 )
                             }

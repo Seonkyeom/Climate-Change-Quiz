@@ -76,8 +76,7 @@ class NicknameActivity : ComponentActivity() {
                             .padding(top = 400.dp, start = 300.dp)
                             .clickable(
                                 onClick = {
-                                    viewModel.saveUserName(this@NicknameActivity, text.text)
-                                    viewModel.saveScore(this@NicknameActivity, Session.score)
+                                    viewModel.updateLeaderBoardRank(text.text, Session.score)
                                     val intent = Intent(this@NicknameActivity, HomeScreenActivity::class.java)
                                     startActivity(intent)
                                 }
