@@ -48,7 +48,7 @@ object Session {
                 q2 = "walking close distance",
                 q3 = "burning fossil fuel",
                 q4 = "using solar power generation",
-                correct = 3,
+                correct = 2,
                 explanation = "Burning fossil fuel can make the atmosphere worse which can ead to make the climate change worse",
             ),
             QuestionBank(

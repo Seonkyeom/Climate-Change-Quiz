@@ -9,68 +9,42 @@ import kotlinx.coroutines.launch
 import java.util.Collections
 
 class MainViewModel : ViewModel() {
-    var ranks = MutableLiveData<List<LeaderBoardRank>>()
+    var ranks = MutableLiveData<MutableList<LeaderBoardRank>>()
 
-    fun updateLeaderBoardRank(context: Context) {
+    fun getLeaderBoardRank() {
         viewModelScope.launch(Dispatchers.IO) {
-            val username = getUserName(context)
-            val score = getScore(context)
             val repository = Repository()
             val response = repository.getLeaderBoardRank()
             if (response is Response.Success) {
-                if (username != null) {
-                    response.data.add(LeaderBoardRank(username, score, 0))
+                ranks.postValue(response.data)
+            }
+        }
+    }
 
-                    Collections.sort(response.data,
-                        Comparator { rank1: LeaderBoardRank, rank2: LeaderBoardRank -> rank2.score - rank1.score })
+    fun updateLeaderBoardRank(username: String, score: Int) {
+        viewModelScope.launch(Dispatchers.IO) {
+            val repository = Repository()
+            val response = repository.getLeaderBoardRank()
+            if (response is Response.Success) {
+                response.data.add(LeaderBoardRank(username, score, 0))
 
-                    for (i in response.data.indices) {
-                        val leaderBoardRank = response.data[i]
-                        leaderBoardRank.rank = i + 1
-                    }
+                Collections.sort(response.data,
+                    Comparator { rank1: LeaderBoardRank, rank2: LeaderBoardRank -> rank2.score - rank1.score })
 
-                    if (response.data.size > 5) {
-                        response.data.removeLast()
-                    }
-
-                    repository.updateLeaderBoardRank(response.data)
+                for (i in response.data.indices) {
+                    val leaderBoardRank = response.data[i]
+                    leaderBoardRank.rank = i + 1
                 }
+
+                if (response.data.size > 5) {
+                    response.data.removeLast()
+                }
+
+                repository.updateLeaderBoardRank(response.data)
                 ranks.postValue(response.data)
             } else {
                 ranks.postValue(ArrayList())
             }
         }
-    }
-
-    fun saveScore(context: Context, score: Int) {
-        val sharedPreferences = context.getSharedPreferences("MySharedPref", Context.MODE_PRIVATE)
-        val myEdit = sharedPreferences.edit()
-        myEdit.putInt("score", score)
-        myEdit.apply()
-    }
-
-    fun saveUserName(context: Context, userName: String) {
-        val sharedPreferences = context.getSharedPreferences("MySharedPref", Context.MODE_PRIVATE)
-
-        // Creating an Editor object to edit(write to the file)
-        val myEdit = sharedPreferences.edit()
-
-        // Storing the key and its value as the data fetched from edittext
-        myEdit.putString("username", userName)
-
-        // Once the changes have been made,
-        // we need to commit to apply those changes made,
-        // otherwise, it will throw an error
-        myEdit.apply()
-    }
-
-    fun getUserName(context: Context): String? {
-        val sharedPreferences = context.getSharedPreferences("MySharedPref", Context.MODE_PRIVATE)
-        return sharedPreferences.getString("username", null)
-    }
-
-    fun getScore(context: Context): Int {
-        val sharedPreferences = context.getSharedPreferences("MySharedPref", Context.MODE_PRIVATE)
-        return sharedPreferences.getInt("score", 0)
     }
 }
