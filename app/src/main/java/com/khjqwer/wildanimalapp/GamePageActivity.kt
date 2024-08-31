@@ -97,13 +97,20 @@ class GamePageActivity : ComponentActivity() {
                                 )
                             }
                         }
-                        Spacer(modifier = Modifier.height(60.dp))
+
+                        Image(
+                            painter = painterResource(id = R.drawable.eco_friendly),
+                            contentDescription = null,
+                            modifier = Modifier.size(80.dp)
+                        )
+
+                        Spacer(modifier = Modifier.height(18.dp))
                         Text(
                             text = Session.currentQuestion.question,
                             fontSize = 30.sp,
                             lineHeight = 40.sp
                         )
-                        Spacer(modifier = Modifier.height(60.dp))
+                        Spacer(modifier = Modifier.height(18.dp))
                         var selectedAnswer by remember { mutableStateOf(-1) }
                         Text(
                             text = "A."+Session.currentQuestion.q1,
@@ -170,12 +177,18 @@ class GamePageActivity : ComponentActivity() {
                                 .align(alignment = Alignment.End)
                                 .size(50.dp)
                                 .clickable {
-                                    if  (selectedAnswer != Session.currentQuestion.correct) {
-                                        val intent = Intent(this@GamePageActivity, WrongPageActivity::class.java)
+                                    if (selectedAnswer != Session.currentQuestion.correct) {
+                                        val intent = Intent(
+                                            this@GamePageActivity,
+                                            WrongPageActivity::class.java
+                                        )
                                         startActivity(intent)
                                     } else {
                                         Session.questionsAnsweredCount += 1
-                                        val intent = Intent(this@GamePageActivity, CorrectPageActivity::class.java)
+                                        val intent = Intent(
+                                            this@GamePageActivity,
+                                            CorrectPageActivity::class.java
+                                        )
                                         startActivity(intent)
                                     }
                                 }
